@@ -1,14 +1,36 @@
-var map;
+var map, infoWindow;
 
 function createMap()
 {
   var options = {
     center: { lat: 36.7783, lng: -119.4179},
     zoom: 5.5,
-    mapTypeId: 'terrain'
+    disableDefaultUI: true
+    //mapTypeId: 'terrain'
   };
 
   map = new google.maps.Map(document.getElementById('map'), options);
+
+  infoWindow = new google.maps.InfoWindow;
+
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (p) {
+        var position = {
+            lat: p.coords.latitude,
+            lng: p.coords.longitude
+        };
+        infoWindow.setPosition(position);
+        //infoWindow.setContent('Your Location');
+        //infoWindow.setContent();
+        infoWindow.open(map);
+    }, function () {
+        handleLocationError ('Geolocation failed', map.center())
+    })
+  }
+  else {
+      handleLocationError('No geolocation available', map.center());
+  }
 
   var script = document.createElement('script');
   script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
