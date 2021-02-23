@@ -21,8 +21,7 @@ function createMap()
             lng: p.coords.longitude
         };
         infoWindow.setPosition(position);
-        //infoWindow.setContent('Your Location');
-        //infoWindow.setContent();
+        infoWindow.setContent('Your Location');
         infoWindow.open(map);
     }, function () {
         handleLocationError ('Geolocation failed', map.center())
