@@ -1,5 +1,41 @@
 var map, infoWindow;
 
+let wildFires = document.querySelector("input[name=wildFires]");
+    wildFires.addEventListener('change', function() {       
+        if (this.checked) {
+          filter[7] = true;
+        } else {
+          filter[7] = false;
+        }
+        console.log(filter);
+      });
+
+    let landSlides = document.querySelector("input[name=landSlides]");
+
+    landSlides.addEventListener('change', function() {       
+        if (this.checked) {
+          filter[3] = true;
+        } else {
+          filter[3] = false;
+        }
+        console.log(filter);
+      });
+
+    let earthQuakes = document.querySelector("input[name=earthQuakes]");
+
+    earthQuakes.addEventListener('change', function() {       
+        if (this.checked) {
+          filter[1] = true;
+          //reassessEvents(1)
+        } else {
+          filter[1] = false;
+        }
+        console.log(filter);
+      });
+
+
+    var filter = [true, true, true, true, true, true, true, true];
+
 function createMap() {
     var options = {
         center: { lat: 36.7783, lng: -119.4179 },
@@ -12,6 +48,8 @@ function createMap() {
     map = new google.maps.Map(document.getElementById('map'), options);
 
     infoWindow = new google.maps.InfoWindow;
+
+    
 
     //Access user's location
     if (navigator.geolocation) {
@@ -62,14 +100,16 @@ function eqfeed_callback(geojson) {
     map.data.addGeoJson(geojson);
 }
 
+
 function requestEvents() { //Makes API Call and parses JSON and passes coordinates for each event to setMark
     var request = new XMLHttpRequest();
-    request.open('GET', 'https://eonet.sci.gsfc.nasa.gov/api/v3/events?limit=10', true);
+    request.open('GET', 'https://eonet.sci.gsfc.nasa.gov/api/v3/events', true);
     request.onload = function() {
         var test;
         var data = JSON.parse(this.response);
         console.log(data);
         var sorted = [[],[],[],[],[],[],[],[]];
+        
         data.events.forEach((event) => {
             switch(event.categories[0].id) {
 
@@ -97,24 +137,32 @@ function requestEvents() { //Makes API Call and parses JSON and passes coordinat
                 case "wildfires":
                     sorted[7].push(event);
                     break;
+                default:
+                    break;
                 
             }       
                   
         })
         console.log(sorted);
         
-        data.events.forEach((event) => {
-            console.log(event.title);
-            console.log(event.geometry);
-            console.log(event.geometry[0].coordinates);
-            setMark(event.geometry[0].coordinates);
-            
-
-        })
+        
+        for(i in sorted) {
+            if(filter[i] == true) {
+                sorted[i].forEach((event) => {
+                    console.log(event.title);
+                    console.log(event.geometry);
+                    console.log(event.geometry[0].coordinates);
+                    var temp = i + 1;
+                    console.log("adding event from category " + i);
+                    setMark(event.geometry[0].coordinates);
+                })
+            }
+        }
 
     }
     request.send();
 }
+
 
 function setMark(coordinates) { //Sets mark at passed coordinates. 
     //Bug: Does not display all the events. Line 86
