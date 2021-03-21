@@ -1,11 +1,15 @@
 var map, infoWindow;
 
+var markers = [[],[],[],[],[],[],[],[]];
+
 let wildFires = document.querySelector("input[name=wildFires]");
     wildFires.addEventListener('change', function() {       
         if (this.checked) {
           filter[7] = true;
+          showMarkers(7);
         } else {
           filter[7] = false;
+          clearMarkers(7);
         }
         console.log(filter);
       });
@@ -15,8 +19,10 @@ let wildFires = document.querySelector("input[name=wildFires]");
     landSlides.addEventListener('change', function() {       
         if (this.checked) {
           filter[3] = true;
+          showMarkers(3);
         } else {
           filter[3] = false;
+          clearMarkers(3);
         }
         console.log(filter);
       });
@@ -26,9 +32,11 @@ let wildFires = document.querySelector("input[name=wildFires]");
     earthQuakes.addEventListener('change', function() {       
         if (this.checked) {
           filter[1] = true;
+          showMarkers(3);
           //reassessEvents(1)
         } else {
           filter[1] = false;
+          clearMarkers(3);
         }
         console.log(filter);
       });
@@ -105,7 +113,6 @@ function requestEvents() { //Makes API Call and parses JSON and passes coordinat
     var request = new XMLHttpRequest();
     request.open('GET', 'https://eonet.sci.gsfc.nasa.gov/api/v3/events', true);
     request.onload = function() {
-        var test;
         var data = JSON.parse(this.response);
         console.log(data);
         var sorted = [[],[],[],[],[],[],[],[]];
@@ -154,7 +161,7 @@ function requestEvents() { //Makes API Call and parses JSON and passes coordinat
                     console.log(event.geometry[0].coordinates);
                     var temp = i + 1;
                     console.log("adding event from category " + i);
-                    setMark(event.geometry[0].coordinates);
+                    setMark(event.geometry[0].coordinates, event.categories[0].id);
                 })
             }
         }
@@ -163,12 +170,54 @@ function requestEvents() { //Makes API Call and parses JSON and passes coordinat
     request.send();
 }
 
+function clearMarkers(category) {
+    setMapOnAll(null, category);
+    }
 
-function setMark(coordinates) { //Sets mark at passed coordinates. 
+function setMapOnAll(map, category) {
+    for (var i = 0; i < markers[category].length; i++) {
+        console.log("removing category from map " + category);
+        markers[category][i].setMap(map);
+    }
+}
+function showMarkers(category) {
+
+     setMapOnAll(map,category);
+
+ }
+function setMark(coordinates, category) { //Sets mark at passed coordinates. 
     //Bug: Does not display all the events. Line 86
     var marker = new google.maps.Marker({
         map: map,
         position: { lat: coordinates[1], lng: coordinates[0] },
         title: 'Some event'
     });
+    switch(category){
+                case "drought":
+                    markers[0].push(marker);
+                    break;
+                case "earthquakes":
+                    markers[1].push(marker);
+                    break;
+                case "floods":
+                    markers[2].push(marker);
+                    break;
+                case "landslides":
+                    markers[3].push(marker);
+                    break;
+                case "severeStorms":
+                    markers[4].push(marker);
+                    break;
+                case "tempExtremes":
+                    markers[5].push(marker);
+                    break;
+                case "waterColor":
+                    markers[6].push(marker);
+                    break;
+                case "wildfires":
+                    markers[7].push(marker);
+                    break;
+                default:
+                    break;
+    }
 }
