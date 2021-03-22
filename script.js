@@ -2,6 +2,9 @@ var map, infoWindow;
 
 var markers = [[],[],[],[],[],[],[],[]];
 
+setInterval(function() {
+    requestEvents();
+}, 5000);
 
 var checkList = document.getElementById('list');
 checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
@@ -16,11 +19,12 @@ let wildFires = document.querySelector("input[name=wildFires]");
         if (this.checked) {
           filter[7] = true;
           showMarkers(7);
+          console.log(markers[7]);
         } else {
           filter[7] = false;
           clearMarkers(7);
+          console.log(markers[7]);
         }
-        console.log(filter);
       });
 
     let landSlides = document.querySelector("input[name=landSlides]");
@@ -33,7 +37,6 @@ let wildFires = document.querySelector("input[name=wildFires]");
           filter[3] = false;
           clearMarkers(3);
         }
-        console.log(filter);
       });
 
     let earthQuakes = document.querySelector("input[name=earthQuakes]");
@@ -47,7 +50,6 @@ let wildFires = document.querySelector("input[name=wildFires]");
           filter[1] = false;
           clearMarkers(3);
         }
-        console.log(filter);
       });
 
 
@@ -129,7 +131,6 @@ function requestEvents() { //Makes API Call and parses JSON and passes coordinat
         
         data.events.forEach((event) => {
             switch(event.categories[0].id) {
-
                 case "drought":
                     sorted[0].push(event);
                     break;
@@ -160,22 +161,24 @@ function requestEvents() { //Makes API Call and parses JSON and passes coordinat
             }       
                   
         })
-        console.log(sorted);
-        
-        
+        console.log(sorted);       
         for(i in sorted) {
-            if(filter[i] == true) {
+            clearMarkers(i);
+            markers[i] = [];
+            //if(filter[i] == true) {
                 sorted[i].forEach((event) => {
                     console.log(event.title);
                     console.log(event.geometry);
                     console.log(event.geometry[0].coordinates);
                     var temp = i + 1;
                     console.log("adding event from category " + i);
+                    
                     setMark(event.geometry[0].coordinates, event.categories[0].id, event);
+                    if(filter[i] == false) 
+                        markers[i][markers[i].length-1].setMap(null);
                 })
-            }
+            //}
         }
-
     }
     request.send();
 }
@@ -254,3 +257,6 @@ function createMarkerContent(data) { // Create content string of event data for 
            "<b>Date: </b>" + data.geometry[0].date.toString() +  "<br>" + 
            "<b>Coordinates: </b>" + "[ " + data.geometry[0].coordinates[1].toString() + ", " + data.geometry[0].coordinates[0].toString() + " ]";
 }
+
+
+
