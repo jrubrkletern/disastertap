@@ -171,7 +171,7 @@ function requestEvents() { //Makes API Call and parses JSON and passes coordinat
                     console.log(event.geometry[0].coordinates);
                     var temp = i + 1;
                     console.log("adding event from category " + i);
-                    setMark(event.geometry[0].coordinates, event.categories[0].id);
+                    setMark(event.geometry[0].coordinates, event.categories[0].id, event);
                 })
             }
         }
@@ -195,10 +195,11 @@ function showMarkers(category) {
      setMapOnAll(map,category);
 
  }
-function setMark(coordinates, category) { //Sets mark at passed coordinates. 
+ function setMark(coordinates, category, event) { //Sets mark at passed coordinates. 
     //Bug: Does not display all the events. Line 86
     var marker = new google.maps.Marker({
         map: map,
+        data: event,
         position: { lat: coordinates[1], lng: coordinates[0] },
         title: 'Some event'
     });
@@ -230,4 +231,26 @@ function setMark(coordinates, category) { //Sets mark at passed coordinates.
                 default:
                     break;
     }
+
+    var contentString = createMarkerContent(marker.data);
+
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+
+    marker.addListener("click", () => {
+        if(!marker.open){
+          infowindow.open(map, marker);
+          marker.open = true;
+        } else {
+          infowindow.close();
+          marker.open = false;
+        }
+    });
+}
+function createMarkerContent(data) { // Create content string of event data for marker window display
+    return "<b>Name: </b>" + data.title.toString() + "<br>" +
+           "<b>Category: </b>" + data.categories[0].title.toString() + "<br>" + 
+           "<b>Date: </b>" + data.geometry[0].date.toString() +  "<br>" + 
+           "<b>Coordinates: </b>" + "[ " + data.geometry[0].coordinates[1].toString() + ", " + data.geometry[0].coordinates[0].toString() + " ]";
 }
