@@ -2,6 +2,7 @@ var map, infoWindow;
 
 var markers = [[],[],[],[],[],[],[],[]];
 
+
 var checkList = document.getElementById('list');
 checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
   if (checkList.classList.contains('visible'))
@@ -65,6 +66,7 @@ function createMap() {
 
     infoWindow = new google.maps.InfoWindow;
 
+
     
 
     //Access user's location
@@ -100,7 +102,7 @@ function createMap() {
     })
 }
 
-function getEarthquakeCircle(value) { //HardCoded Purple Circles
+/*function getEarthquakeCircle(value) { //HardCoded Purple Circles
 
     return {
         path: google.maps.SymbolPath.CIRCLE,
@@ -110,7 +112,7 @@ function getEarthquakeCircle(value) { //HardCoded Purple Circles
         strokeColor: 'white',
         strokeWeight: .5
     };
-}
+}*/
 
 function eqfeed_callback(geojson) {
     map.data.addGeoJson(geojson);
