@@ -200,12 +200,56 @@ function showMarkers(category) {
  }
  function setMark(coordinates, category, event) { //Sets mark at passed coordinates. 
     //Bug: Does not display all the events. Line 86
-    var marker = new google.maps.Marker({
-        map: map,
-        data: event,
-        position: { lat: coordinates[1], lng: coordinates[0] },
-        title: 'Some event'
-    });
+
+    if(coordinates.length < 3) {
+        var marker = new google.maps.Marker({
+            map: map,
+            data: event,
+            position: { lat: coordinates[1], lng: coordinates[0] },
+            title: category
+        });
+        } else {
+            var shape = [];  
+            var color;                    
+            for(i = 0; i < coordinates.length; i++) {
+                shape.push([]);             
+                shape[i] = new google.maps.LatLng(coordinates[i][1],coordinates[i][0]);         
+            }
+            switch(category){
+                case "drought":
+                    color = "#E35131";
+                    break;
+                case "earthquakes":
+                    color = "#6C2812";
+                    break;
+                case "floods":
+                    color = "#0D3FCF";
+                    break;
+                case "landslides":
+                    color = "#8B3E2B";
+                    break;
+                case "severeStorms":
+                    color = "#32FF00";
+                    break;
+                case "wildfires":
+                    color = "#FF0000";
+                    break;
+                default:
+                    color = "FEFEFE";
+                    break;
+            }
+            var marker = new google.maps.Polygon({ 
+            paths: shape,
+            data: event,
+            strokeColor: color,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: color,
+            fillOpacity: 0.35,
+        });
+        marker.setMap(map);
+        }
+    
     switch(category){
                 case "drought":
                     markers[0].push(marker);
