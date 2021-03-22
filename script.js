@@ -2,6 +2,14 @@ var map, infoWindow;
 
 var markers = [[],[],[],[],[],[],[],[]];
 
+var checkList = document.getElementById('list');
+checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
+  if (checkList.classList.contains('visible'))
+    checkList.classList.remove('visible');
+  else
+    checkList.classList.add('visible');
+}
+
 let wildFires = document.querySelector("input[name=wildFires]");
     wildFires.addEventListener('change', function() {       
         if (this.checked) {

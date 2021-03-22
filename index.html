@@ -9,39 +9,48 @@
     <link rel = "stylesheet" href = "style.css">
   </head>
   <body>
-    <div class = "containter-fluid">
       <div class = "row">
         <div class = "col">
           <div>
-            <img src = "DisasterTapLogo.png" alt = "Disaster Tap" width = 470 height = 230>
+            <img src = "DisasterTapLogo.png" alt = "Disaster Tap" width = 380 height = 160>
           </div>
+          <div>
+        </div>
         </div>
       </div>
+      <br><br>
       <div class = "row">
         <div class = "col">
           <div id = "map"></div>
         </div>
       </div>
-    </div>
 
-    <div class='disasterMenu' id='disasterMenu'>
-      <div>
-        <input type="checkbox" id="earthQuakes" name="earthQuakes"
-        checked>
-        <label for="earthQuakes">Earthquakes</label>
+      <div id="list" class="dropdown-check" tabindex="100">
+        <span class="anchor">Filter Disasters</span>
+        <ul class="items">
+          <li>
+            <div>
+              <input type="checkbox" id="earthQuakes" name="earthQuakes"
+              checked>
+              <label for="earthQuakes">Earthquakes</label>
+            </div>
+          </li>
+          <li>
+            <div>
+              <input type="checkbox" id="wildFires" name="wildFires"
+              checked>
+              <label for="wildFires">Wildfires</label>
+            </div>
+          </li>
+          <li>
+            <div>
+              <input type="checkbox" id="landSlides" name="landSlides"
+              checked>
+              <label for="landSlides">Landslides</label>
+            </div>
+          </li>
+        </ul>
       </div>
-      <div>
-        <input type="checkbox" id="wildFires" name="wildFires"
-        checked>
-        <label for="wildFires">Wildfires</label>
-      </div>
-      <div>
-        <input type="checkbox" id="landSlides" name="landSlides"
-        checked>
-        <label for="landSlides">Landslides</label>
-      </div>
-      
-    </div>
 
     <script src = "script.js"></script>
     <script src = "https://maps.googleapis.com/maps/api/js?callback=createMap&libraries=places&key=AIzaSyBcn0hXFbhqIdwQ-3jR-2TM65j6PiL60nk" async defer></script>
