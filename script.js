@@ -1,10 +1,10 @@
 var map, infoWindow;
 
-var markers = [[],[],[],[],[],[],[],[]];
+var markers = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
 
 setInterval(function() {
     requestEvents();
-}, 5000);
+}, 60000);
 
 var checkList = document.getElementById('list');
 checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
@@ -53,7 +53,7 @@ let wildFires = document.querySelector("input[name=wildFires]");
       });
 
 
-    var filter = [true, true, true, true, true, true, true, true];
+    var filter = [true, true, true, true, true, true, true, true, true, true, true, true, true];
 
 function createMap() {
     var options = {
@@ -127,7 +127,7 @@ function requestEvents() { //Makes API Call and parses JSON and passes coordinat
     request.onload = function() {
         var data = JSON.parse(this.response);
         console.log(data);
-        var sorted = [[],[],[],[],[],[],[],[]];
+        var sorted = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
         
         data.events.forEach((event) => {
             switch(event.categories[0].id) {
@@ -155,6 +155,25 @@ function requestEvents() { //Makes API Call and parses JSON and passes coordinat
                 case "wildfires":
                     sorted[7].push(event);
                     break;
+                case "dustHaze":
+                    sorted[8].push(event);
+                    break;
+                case "manmade":
+                    sorted[9].push(event);
+                    break;
+                case "seaLakeIce":
+                    sorted[10].push(event);
+                    break;
+                case "snow":
+                    sorted[11].push(event);
+                    break;
+                 case "volcanoes":
+                    sorted[12].push(event);
+                    break;
+                    
+                
+                
+                
                 default:
                     break;
                 
@@ -274,6 +293,21 @@ function showMarkers(category) {
                     break;
                 case "wildfires":
                     markers[7].push(marker);
+                    break;
+                case "dustHaze":
+                    markers[8].push(event);
+                    break;
+                case "manmade":
+                    markers[9].push(event);
+                    break;
+                case "seaLakeIce":
+                    markers[10].push(event);
+                    break;
+                case "snow":
+                    markers[11].push(event);
+                    break;
+                 case "volcanoes":
+                    markers[12].push(event);
                     break;
                 default:
                     break;
