@@ -49,11 +49,9 @@ let wildFires = document.querySelector("input[name=wildFires]");
         if (this.checked) {
           filter[7] = true;
           showMarkers(7);
-          console.log(markers[7]);
         } else {
           filter[7] = false;
-          clearMarkers(7);
-          console.log(markers[7]);
+          clearMarkers(7);  
         }
       });
 
@@ -74,16 +72,15 @@ let wildFires = document.querySelector("input[name=wildFires]");
     earthQuakes.addEventListener('change', function() {       
         if (this.checked) {
           filter[1] = true;
-          showMarkers(3);
-          //reassessEvents(1)
+          showMarkers(1);
         } else {
           filter[1] = false;
-          clearMarkers(3);
+          clearMarkers(1);
         }
       });
 
 
-    var filter = [true, true, true, true, true, true, true, true, false, false, false, false, false];
+    var filter = [false, true, false, true, false, false, false, true, false, false, false, false, false];
 
 function createMap() {
     var options = {
@@ -153,12 +150,10 @@ function eqfeed_callback(geojson) {
 
 function requestEvents() { //Makes API Call and parses JSON and passes coordinates for each event to setMark
     var request = new XMLHttpRequest();
-    request.open('GET', 'https://eonet.sci.gsfc.nasa.gov/api/v3/events', true);
+    request.open('GET', 'https://eonet.sci.gsfc.nasa.gov/api/v3/events?status=closed', true);
     request.onload = function() {
         var data = JSON.parse(this.response);
-        console.log(data);
         var sorted = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
-        
         data.events.forEach((event) => {
             switch(event.categories[0].id) {
                 case "drought":
@@ -199,37 +194,28 @@ function requestEvents() { //Makes API Call and parses JSON and passes coordinat
                     break;
                  case "volcanoes":
                     sorted[12].push(event);
-                    break;
-                    
-                
-                
+                    break;   
                 
                 default:
                     break;
                 
             }       
                   
-        })
-        console.log(sorted);       
-        for(i in sorted) {
+        })   
+        for(i = 0; i < sorted.length; i++) {
             clearMarkers(i);
-            markers[i] = [];
-            //if(filter[i] == true) {
-                sorted[i].forEach((event) => {
-                    console.log(event.title);
-                    console.log(event.geometry);
-                    console.log(event.geometry[0].coordinates);
-                    var temp = i + 1;
-                    console.log("adding event from category " + i);
+            markers[i] = [];         
+            sorted[i].forEach((event) => {  
+                setMark(event.geometry[0].coordinates, event.geometry[0].type, event.categories[0].id, event);      
+                if(filter[i] == false) {                               
+                    markers[i][markers[i].length-1].setMap(null);
                     
-                    setMark(event.geometry[0].coordinates, event.categories[0].id, event);
-                    if(filter[i] == false) 
-                        markers[i][markers[i].length-1].setMap(null);
-                })
-            //}
+                }
+            }) 
         }
     }
     request.send();
+    
 }
 
 function clearMarkers(category) {
@@ -238,7 +224,6 @@ function clearMarkers(category) {
 
 function setMapOnAll(map, category) {
     for (var i = 0; i < markers[category].length; i++) {
-        console.log("removing category from map " + category);
         markers[category][i].setMap(map);
     }
 }
@@ -247,24 +232,36 @@ function showMarkers(category) {
      setMapOnAll(map,category);
 
  }
- function setMark(coordinates, category, event) { //Sets mark at passed coordinates. 
+ function setMark(coordinates, type, category, event) { //Sets mark at passed coordinates. 
     //Bug: Does not display all the events. Line 86
-
-    if(coordinates.length < 3) {
-        var marker = new google.maps.Marker({
+    
+    var myLat;
+    var myLng;
+    if(type == "Point") {
+        if(!Array.isArray(coordinates[0])) {      
+            myLat = coordinates[1];
+            myLng = coordinates[0];
+        } else {         
+            myLat = coordinates[0][coordinates[0].length-1][1];
+            myLng = coordinates[0][coordinates[0].length-1][0];
+        }
+        console.log("setting icon..")
+        console.log(category)
+            var marker = new google.maps.Marker({
             map: map,
             data: event,
             icon: {url:icons[category].icon, scaledSize: new google.maps.Size(50, 50)},
-            position: { lat: coordinates[1], lng: coordinates[0] },
+            position: { lat: myLat, lng: myLng },
             title: category
         });
         } else {
             var shape = [];  
-            var color;                    
-            for(i = 0; i < coordinates.length; i++) {
-                shape.push([]);             
-                shape[i] = new google.maps.LatLng(coordinates[i][1],coordinates[i][0]);         
-            }
+            var color;
+            var r = 0;  
+            for(r = 0; r < coordinates[0].length; r++) {
+                shape.push([]);                            
+                shape[r] = new google.maps.LatLng(coordinates[0][r][1],coordinates[0][r][0]);         
+            }             
             switch(category){
                 case "drought":
                     color = "#E35131";
@@ -279,13 +276,13 @@ function showMarkers(category) {
                     color = "#8B3E2B";
                     break;
                 case "severeStorms":
-                    color = "#32FF00";
+                    color = "#b80dcf";
                     break;
                 case "wildfires":
                     color = "#FF0000";
                     break;
                 default:
-                    color = "FEFEFE";
+                    color = "#FEFEFE";
                     break;
             }
             var marker = new google.maps.Polygon({ 
@@ -296,10 +293,12 @@ function showMarkers(category) {
             strokeWeight: 2,
             fillColor: color,
             fillOpacity: 0.35,
+            
         });
-        marker.setMap(map);
+            marker.setMap(map);
         }
-    
+       
+        
     switch(category){
                 case "drought":
                     markers[0].push(marker);
@@ -326,24 +325,25 @@ function showMarkers(category) {
                     markers[7].push(marker);
                     break;
                 case "dustHaze":
-                    markers[8].push(event);
+                    markers[8].push(marker);
+                    
                     break;
                 case "manmade":
-                    markers[9].push(event);
+                    markers[9].push(marker);           
                     break;
                 case "seaLakeIce":
-                    markers[10].push(event);
+                    markers[10].push(marker);
                     break;
                 case "snow":
-                    markers[11].push(event);
+                    markers[11].push(marker);
                     break;
                  case "volcanoes":
-                    markers[12].push(event);
+                    markers[12].push(marker);
                     break;
                 default:
                     break;
     }
-
+    
     var contentString = createMarkerContent(marker.data);
 
     var infowindow = new google.maps.InfoWindow({
@@ -363,7 +363,7 @@ function showMarkers(category) {
 function createMarkerContent(data) { // Create content string of event data for marker window display
     return "<b>Name: </b>" + data.title.toString() + "<br>" +
            "<b>Category: </b>" + data.categories[0].title.toString() + "<br>" + 
-           "<b>Date: </b>" + data.geometry[0].date.toString() +  "<br>" + 
+           "<b>Date: </b>" + data.geometry[0].date.toString() +  "<br>" 
            "<b>Coordinates: </b>" + "[ " + data.geometry[0].coordinates[1].toString() + ", " + data.geometry[0].coordinates[0].toString() + " ]";
 }
 
