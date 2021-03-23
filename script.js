@@ -1,5 +1,35 @@
 var map, infoWindow;
 
+var iconBase = 'icons/'
+
+var icons = {
+    // drought: {
+    //     icon:  
+    // },
+    earthquakes: {
+        icon: iconBase + 'earthQuakeMarker.png'
+    },
+    // floods: {
+    //     icon: 
+    // },
+    landslides: {
+        icon: iconBase + 'landSlideMarker.png'
+    },
+    // severeStorms: {
+    //     icon: 
+    // },
+    // tempExtremes: {
+    //     icon: 
+    // },
+    // waterColor: {
+    //     icon: 
+    // },
+    wildfires: {
+        icon: iconBase + 'fireMarker.png'
+    }
+};
+
+
 var markers = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
 
 setInterval(function() {
@@ -224,6 +254,7 @@ function showMarkers(category) {
         var marker = new google.maps.Marker({
             map: map,
             data: event,
+            icon: {url:icons[category].icon, scaledSize: new google.maps.Size(50, 50)},
             position: { lat: coordinates[1], lng: coordinates[0] },
             title: category
         });
