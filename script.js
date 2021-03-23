@@ -150,7 +150,7 @@ function eqfeed_callback(geojson) {
 
 function requestEvents() { //Makes API Call and parses JSON and passes coordinates for each event to setMark
     var request = new XMLHttpRequest();
-    request.open('GET', 'https://eonet.sci.gsfc.nasa.gov/api/v3/events?status=closed', true);
+    request.open('GET', 'https://eonet.sci.gsfc.nasa.gov/api/v3/events', true);
     request.onload = function() {
         var data = JSON.parse(this.response);
         var sorted = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
