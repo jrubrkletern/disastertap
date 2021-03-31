@@ -7,13 +7,13 @@ var icons = {
     //     icon:  
     // },
     earthquakes: {
-        icon: iconBase + 'earthQuakeMarker.png'
+        icon: iconBase + 'earthquakesMarker.png'
     },
     // floods: {
     //     icon: 
     // },
     landslides: {
-        icon: iconBase + 'landSlideMarker.png'
+        icon: iconBase + 'landslidesMarker.png'
     },
     // severeStorms: {
     //     icon: 
@@ -25,7 +25,7 @@ var icons = {
     //     icon: 
     // },
     wildfires: {
-        icon: iconBase + 'fireMarker.png'
+        icon: iconBase + 'wildfiresMarker.png'
     }
 };
 
