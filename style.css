@@ -32,9 +32,13 @@ label {
 
 .dropdown-check {
   display: inline-block;
-  background-color: #67bdff;
-  z-index: 99;
-  
+  background-color: #67bdff; 
+  position: absolute;
+  margin-right: 10px;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .dropdown-check .anchor {

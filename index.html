@@ -5,7 +5,7 @@
     <title>Disaster Tap</title>
     <meta name = "viewport" content = "initial-scale = 1.0">
     <meta charset = "utf-8">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
     <link rel = "stylesheet" href = "style.css">
   </head>
   <body>
@@ -13,6 +13,35 @@
         <div class = "col">
           <div>
             <img src = "DisasterTapLogo.png" alt = "Disaster Tap" width = 380 height = 160>
+            <div id="list" class="dropdown" style="position: absolute; top:0; right:0; margin-right: 100px; margin-top: 50px;">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Filter Disasters
+              </button>
+              <span class="anchor"></span>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li class="dropdown-item">
+                  <div>
+                    <input type="checkbox" id="earthQuakes" name="earthQuakes"
+                    checked>
+                    <label for="earthQuakes">Earthquakes</label>
+                  </div>
+                </li>
+                <li class="dropdown-item">
+                  <div>
+                    <input type="checkbox" id="wildFires" name="wildFires"
+                    checked>
+                    <label for="wildFires">Wildfires</label>
+                  </div>
+                </li>
+                <li>
+                  <div class="dropdown-item">
+                    <input type="checkbox" id="landSlides" name="landSlides"
+                    checked>
+                    <label for="landSlides">Landslides</label>
+                  </div>
+                </li>
+              </div>
+            </div>
           </div>
           <div>
         </div>
@@ -25,35 +54,11 @@
         </div>
       </div>
 
-      <div id="list" class="dropdown-check" tabindex="100">
-        <span class="anchor">Filter Disasters</span>
-        <ul class="items">
-          <li>
-            <div>
-              <input type="checkbox" id="earthQuakes" name="earthQuakes"
-              checked>
-              <label for="earthQuakes">Earthquakes</label>
-            </div>
-          </li>
-          <li>
-            <div>
-              <input type="checkbox" id="wildFires" name="wildFires"
-              checked>
-              <label for="wildFires">Wildfires</label>
-            </div>
-          </li>
-          <li>
-            <div>
-              <input type="checkbox" id="landSlides" name="landSlides"
-              checked>
-              <label for="landSlides">Landslides</label>
-            </div>
-          </li>
-        </ul>
-      </div>
-
     <script src = "script.js"></script>
     <script src = "https://maps.googleapis.com/maps/api/js?callback=createMap&libraries=places&key=AIzaSyBcn0hXFbhqIdwQ-3jR-2TM65j6PiL60nk" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
   </body>
   <footer>
