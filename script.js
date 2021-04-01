@@ -80,7 +80,7 @@ let wildFires = document.querySelector("input[name=wildFires]");
       });
 
 
-    var filter = [false, true, false, true, false, false, false, true, false, false, false, false, false];
+      var filter = [false, true, false, true, false, false, false, true, false, false, false, false, false];
 
 function createMap() {
     var options = {
