@@ -3,29 +3,44 @@ var map, infoWindow;
 var iconBase = 'icons/'
 
 var icons = {
-    // drought: {
-    //     icon:  
-    // },
+    drought: {
+        icon: iconBase + 'droughtMarker.png'
+    },
     earthquakes: {
         icon: iconBase + 'earthquakesMarker.png'
     },
-    // floods: {
-    //     icon: 
-    // },
+    floods: {
+        icon: iconBase + 'floodsMarker.png'
+    },
     landslides: {
         icon: iconBase + 'landslidesMarker.png'
     },
-    // severeStorms: {
-    //     icon: 
-    // },
-    // tempExtremes: {
-    //     icon: 
-    // },
-    // waterColor: {
-    //     icon: 
-    // },
+    severeStorms: {
+        icon: iconBase + 'severeStormsMarker.png'
+    },
+    tempExtremes: {
+        icon: iconBase + 'temperatureExtremesMarker.png'
+    },
+    waterColor: {
+        icon: iconBase + 'waterColorMarker.png'
+    },
     wildfires: {
         icon: iconBase + 'wildfiresMarker.png'
+    },
+    dustHaze: {
+        icon: iconBase + 'dustAndHazeMarker.png'
+    },
+    manmade: {
+        icon: iconBase + 'manMadeMarker.png'
+    },
+    seaLakeIce: {
+        icon: iconBase + 'seaAndLakeIceMarker.png'
+    },
+    snow: {
+        icon: iconBase + 'snowMarker.png'
+    },
+    volcanoes: {
+        icon: iconBase + 'volcanoesMarker.png'
     }
 };
 
