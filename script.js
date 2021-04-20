@@ -62,7 +62,7 @@ checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
 let wildFires = document.querySelector("input[name=wildFires]");
     wildFires.addEventListener('change', function() {       
         if (this.checked) {
-          filter[7] = true;
+          filter[7] = true; 
           showMarkers(7);
         } else {
           filter[7] = false;
@@ -96,6 +96,9 @@ let wildFires = document.querySelector("input[name=wildFires]");
 
 
       var filter = [false, true, false, true, false, false, false, true, false, false, false, false, false];
+      var dateAndTimeFilter = false;
+      var selectedStartDate = null;
+      var selectedEndDate = null;
 
 function createMap() {
     var options = {
@@ -107,11 +110,11 @@ function createMap() {
 
     //displays map
     map = new google.maps.Map(document.getElementById('map'), options);
-
+    map.setOptions({ minZoom: 4, maxZoom: 18});
     infoWindow = new google.maps.InfoWindow;
-
-
     
+
+
 
     //Access user's location
     if (navigator.geolocation) {
@@ -217,18 +220,40 @@ function requestEvents() { //Makes API Call and parses JSON and passes coordinat
             }       
                   
         })   
-        for(i = 0; i < sorted.length; i++) {
-            clearMarkers(i);
-            markers[i] = [];         
-            sorted[i].forEach((event) => {  
-                setMark(event.geometry[0].coordinates, event.geometry[0].type, event.categories[0].id, event);      
-                if(filter[i] == false) {                               
-                    markers[i][markers[i].length-1].setMap(null);
-                    
-                }
-            }) 
+            for(i = 0; i < sorted.length; i++) {
+                clearMarkers(i);
+                markers[i] = [];         
+                sorted[i].forEach((event) => {  
+                    setMark(event.geometry[0].coordinates, event.geometry[0].type, event.categories[0].id, event);      
+                    if(filter[i] == false) {                               
+                        markers[i][markers[i].length-1].setMap(null);   
+                    }
+                    else if(dateAndTimeFilter){
+                        setMapOnAll(null, i);
+                        for(j = 0; j < markers.length; j++)
+                        {
+                            if(markers[i][j] != null)
+                            {
+                                eventDate = markers[i][j].data.geometry[0].date.toString()
+
+                                if(selectedStartDate <= eventDate &&  eventDate <= selectedEndDate)
+                                {
+                                    console.log("Start Date:  " + selectedStartDate);
+                                    console.log("Actual : " + eventDate);
+                                    console.log("End Date : " + selectedEndDate);
+                                    dateAndTimeFilter = true;
+                                    markers[i][j].setMap(map);
+                                } else 
+                                {
+                                    dateAndTimeFilter = true;
+                                    markers[i][j].setMap(null);
+                                }
+                            }
+                        } 
+                    }
+                }) 
+            }
         }
-    }
     request.send();
     
 }
@@ -243,9 +268,33 @@ function setMapOnAll(map, category) {
     }
 }
 function showMarkers(category) {
-
-     setMapOnAll(map,category);
-
+    if(selectedStartDate == null || selectedStartDate == null)
+    {
+        setMapOnAll(map,category);
+    }
+    else 
+    {
+        for(j = 0; j < markers.length; j++)
+        {
+            if(markers[category][j] != null)
+            {
+                eventDate = markers[category][j].data.geometry[0].date.toString();
+    
+                if(selectedStartDate <= eventDate &&  eventDate <= selectedEndDate)
+                {
+                    console.log("Start Date:  " + selectedStartDate);
+                    console.log("Actual : " + eventDate);
+                    console.log("End Date : " + selectedEndDate);
+                    dateAndTimeFilter = true;
+                    markers[category][j].setMap(map);
+                } else 
+                {
+                    dateAndTimeFilter = true;
+                    markers[category][j].setMap(null);
+                }
+            }
+        }     
+    }
  }
  function setMark(coordinates, type, category, event) { //Sets mark at passed coordinates. 
     //Bug: Does not display all the events. Line 86
@@ -308,7 +357,7 @@ function showMarkers(category) {
             strokeWeight: 2,
             fillColor: color,
             fillOpacity: 0.35,
-            
+
         });
             marker.setMap(map);
         }
@@ -376,11 +425,71 @@ function showMarkers(category) {
     });
 }
 function createMarkerContent(data) { // Create content string of event data for marker window display
-    return "<b>Name: </b>" + data.title.toString() + "<br>" +
+    return "<b>Name: </b>" + data.title.toString() + "<br>" + 
            "<b>Category: </b>" + data.categories[0].title.toString() + "<br>" + 
            "<b>Date: </b>" + data.geometry[0].date.toString() +  "<br>" 
            "<b>Coordinates: </b>" + "[ " + data.geometry[0].coordinates[1].toString() + ", " + data.geometry[0].coordinates[0].toString() + " ]";
 }
 
+$(function() {
+    $('input[name="datetimes"]').daterangepicker({
+      timePicker: true,
+      autoUpdateInput: true,
+      startDate: moment().startOf('hour'),
+      endDate: moment().startOf('hour'),
+      maxDate: moment().endOf('hour'),
+      locale: {
+        format: 'MM/DD/YYYY hh:mm A'
+      } 
+  });
+  $('input[name="datetimes"]').on('apply.daterangepicker', function(ev, picker) {
+    for(i = 0; i < filter.length; i++) {
+        setMapOnAll(null, i);
+        for(j = 0; j < markers.length; j++)
+        {
+            if(markers[i][j] != null)
+            {
+                selectedStartDate = picker.startDate.toISOString();
+                selectedEndDate = picker.endDate.toISOString();
+                eventDate = markers[i][j].data.geometry[0].date.toString();
+
+                if(selectedStartDate <= eventDate && eventDate <= selectedEndDate)
+                {
+                    console.log("Start Date:  " + selectedStartDate);
+                    console.log("Actual : " + eventDate);
+                    console.log("End Date : " + selectedEndDate);
+                    dateAndTimeFilter = true;
+                    if(filter[i] == true)
+                    {
+                        markers[i][j].setMap(map);
+                    }
+                    
+                } else 
+                {
+                    console.log("FStart Date:  " + selectedStartDate);
+                    console.log("FActual : " + eventDate);
+                    console.log("FEnd Date : " + selectedEndDate);
+                    dateAndTimeFilter = true;
+                    if(filter[i] == true)
+                    {
+                        markers[i][j].setMap(null);
+                    }
+                }
+            }
+        }                         
+    } 
+  });
+});
 
 
+function openNav() {
+    document.getElementById("mySidebar").style.width = "550px";
+    document.getElementById("main").style.marginLeft = "550px";
+}
+
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+}
+
+  

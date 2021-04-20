@@ -7,61 +7,72 @@
     <meta charset = "utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
     <link rel = "stylesheet" href = "style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   </head>
   <body>
-      <div class = "row">
-        <div class = "col">
-          <div>
-            <img src = "DisasterTapLogo.png" alt = "Disaster Tap" width = 380 height = 160>
-            <div id="list" class="dropdown" style="position: absolute; top:0; right:0; margin-right: 100px; margin-top: 50px;">
-              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Filter Disasters
-              </button>
-              <span class="anchor"></span>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li class="dropdown-item">
-                  <div>
-                    <input type="checkbox" id="earthQuakes" name="earthQuakes"
-                    checked>
-                    <label for="earthQuakes">Earthquakes</label>
-                  </div>
-                </li>
-                <li class="dropdown-item">
-                  <div>
-                    <input type="checkbox" id="wildFires" name="wildFires"
-                    checked>
-                    <label for="wildFires">Wildfires</label>
-                  </div>
-                </li>
-                <li>
-                  <div class="dropdown-item">
-                    <input type="checkbox" id="landSlides" name="landSlides"
-                    checked>
-                    <label for="landSlides">Landslides</label>
-                  </div>
-                </li>
-              </div>
+    
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      
+      <div class="category">
+        <label class="labelSideBarItem">Category</label><br>
+        <div id="list" class="categoryList">
+          <span class="anchor"></span>
+          <li class="dropdown-item">
+            <div>
+              <input type="checkbox" id="earthQuakes" name="earthQuakes"
+              checked>
+              <label for="earthQuakes" class="checkboxLabel">Earthquakes</label>
             </div>
-          </div>
-          <div>
-        </div>
-        </div>
-      </div>
-      <br><br>
-      <div class = "row">
-        <div class = "col">
-          <div id = "map"></div>
+          </li>
+          <li class="dropdown-item">
+            <div>
+              <input type="checkbox" id="wildFires" name="wildFires"
+              checked>
+              <label for="wildFires" class="checkboxLabel">Wildfires</label>
+            </div>
+          </li>
+          <li class="dropdown-item">
+            <div>
+              <input type="checkbox" id="landSlides" name="landSlides"
+              checked>
+              <label for="wildFires" class="checkboxLabel">Landslides</label>
+            </div>
+          </li>
         </div>
       </div>
 
-    <script src = "script.js"></script>
+      <div class="dateAndTime">
+        <label class="labelSideBarItem">Date and Time</label><br>
+        <div style="padding-left: 20px;">
+          <input type="text" name="datetimes" id = "dt" class="form-control"/>
+        </div>
+      </div>
+ 
+    </div>
+    
+    <div id="main">
+      <div class="logo">
+        <img src = "DisasterTapLogo.png" alt = "Disaster Tap" width = 380 height = 160>
+      </div>
+      <button class="openbtn" onclick="openNav()">☰ Filter Disasters</button>   
+    </div>
+    
+    <div id = "map">   
+    </div>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src = "script.js" ></script>
     <script src = "https://maps.googleapis.com/maps/api/js?callback=createMap&libraries=places&key=AIzaSyBcn0hXFbhqIdwQ-3jR-2TM65j6PiL60nk" async defer></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   </body>
+
   <footer>
-    <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+    <div class="">Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
   </footer>
 </html>
