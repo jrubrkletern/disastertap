@@ -1,0 +1,215 @@
+#map {
+  width:100%;
+  height:100%;
+  position: absolute;
+  display:    flex;
+  top: 0px;
+  left: 0px;
+}
+body {
+  background-color: #AADAFF;
+}
+h1.display-4 {
+  font-family: times, Times New Roman, times-roman, georgia, serif;
+	color: #444;
+	margin: 0;
+	padding: 0px 0px 6px 0px;
+	font-size: 51px;
+	line-height: 44px;
+	letter-spacing: -2px;
+	font-weight: bold;
+  margin-bottom: 10px;
+  margin-right: 25px;
+
+}
+
+p,
+label {
+    font: 1rem 'Fira Sans', sans-serif;
+    color:black;
+    font-size: 14px;
+    font-weight: bolder;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    padding-left: 5px;
+}
+
+.dropdown {
+  position: relative; 
+  top:0; 
+  right:0; 
+  float: right; 
+  margin-top: 10px;
+}
+
+.dropdown-check {
+  display: inline-block;
+  background-color: #67bdff; 
+  position: absolute;
+  margin-right: 10px;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dropdown-check .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 50px 5px 10px;
+  border: 1px solid #ccc;
+}
+
+.dropdown-check .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+.dropdown-check .anchor:active:after {
+  right: 8px;
+  top: 21%;
+}
+
+.dropdown-check ul.items {
+  padding: 2px;
+  display: none;
+  margin: 0;
+  border: 1px solid;
+  border-top: none;
+}
+
+.dropdown-check ul.items li {
+  list-style: none;
+}
+
+.dropdown-check.visible .anchor {
+  color: #0094ff;
+}
+
+.dropdown-check.visible .items {
+  display: block;
+}
+
+footer {
+  position: absolute;
+  bottom: 5px;
+  left: 100px;
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  border-radius: 4px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  display: block;
+  z-index: 100; 
+  position: absolute; 
+  margin-top: 160px;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
+.labelSideBarItem{
+  color: white;
+  font-size: 20px;
+  padding-left: 20px;
+}
+
+.form-control {
+  width: 490px;
+  color: black;
+}
+
+.dateAndTime{
+  padding-top: 20px;
+}
+
+.controls{
+  width: 490px;
+  padding: 12px 20px;
+  margin: 10px 0;
+  margin-left: 20px;
+}
+
+.checkboxLabel{
+  color: white;
+}
+
+.dropdown-item:hover {
+  background: gray;
+}
+
+
+.categoryList {
+  padding-left: 20px;
+}
+
+.logo{
+  border: none;
+  display: block;
+  z-index: 100; 
+  position: absolute; 
+}

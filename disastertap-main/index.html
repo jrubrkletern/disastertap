@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Disaster Tap</title>
+    <meta name="viewport" content="initial-scale = 1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+</head>
+
+<body>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+
+        <div class="category">
+            <label class="labelSideBarItem">Category</label><br>
+            <div id="list" class="categoryList">
+                <span class="anchor"></span>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="earthQuakes" name="earthQuakes" checked>
+                        <label for="earthQuakes" class="checkboxLabel">Earthquakes</label>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="wildFires" name="wildFires" checked>
+                        <label for="wildFires" class="checkboxLabel">Wildfires</label>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="landSlides" name="landSlides" checked>
+                        <label for="wildFires" class="checkboxLabel">Landslides</label>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="droughts" name="droughts" checked>
+                        <label for="droughts" class="checkboxLabel">Droughts</label>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="dustHaze" name="dustHaze" checked>
+                        <label for="dustHaze" class="checkboxLabel">Dust & Haze</label>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="floods" name="floods" checked>
+                        <label for="floods" class="checkboxLabel">Floods</label>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="manmade" name="manmade" checked>
+                        <label for="manmade" class="checkboxLabel">Man Made</label>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="seaLakeIce" name="seaLakeIce" checked>
+                        <label for="seaLakeIce" class="checkboxLabel">Iceberg</label>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="severeStorms" name="severeStorms" checked>
+                        <label for="severeStorms" class="checkboxLabel">Severe Storms</label>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="snow" name="snow" checked>
+                        <label for="snow" class="checkboxLabel">Snow</label>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="tempExtremes" name="tempExtremes" checked>
+                        <label for="tempExtremes" class="checkboxLabel">Extreme Temperatures</label>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="volcanoes" name="volcanoes" checked>
+                        <label for="volcanoes" class="checkboxLabel">Active Volcanoes</label>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <div>
+                        <input type="checkbox" id="waterColor" name="waterColor" checked>
+                        <label for="waterColor" class="checkboxLabel">Water Color</label>
+                    </div>
+                </li>
+            </div>
+        </div>
+
+        <div class="dateAndTime">
+            <label class="labelSideBarItem">Date and Time</label><br>
+            <div style="padding-left: 20px;">
+                <input type="text" name="datetimes" id="dt" class="form-control" />
+            </div>
+        </div>
+
+        <div class="searchBar">
+            <input id="pac-input" class="controls" type="text" placeholder="Search Box" />
+        </div>
+
+        <div class="searchButton">
+            <input type="button" id="myButton" value="Apply Filter" onclick="filterButtonClick();">
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="logo">
+            <img src="DisasterTapLogo.png" alt="Disaster Tap" width=3 80 height=1 60>
+        </div>
+        <button class="openbtn" onclick="openNav()">☰ Filter Disasters</button>
+    </div>
+
+    <div id="map">
+    </div>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="script.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=createMap&libraries=places&key=AIzaSyBcn0hXFbhqIdwQ-3jR-2TM65j6PiL60nk" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+</body>
+
+<footer>
+    <div class="">Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+</footer>
+
+</html>
