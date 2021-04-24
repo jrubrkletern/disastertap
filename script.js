@@ -114,8 +114,6 @@ function createMap() {
     infoWindow = new google.maps.InfoWindow;
     
 
-
-
     //Access user's location
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(p) {
@@ -147,7 +145,7 @@ function createMap() {
             icon: getEarthquakeCircle(magnitude)
         }
     })
-}
+}    
 
 /*function getEarthquakeCircle(value) { //HardCoded Purple Circles
 
@@ -229,8 +227,8 @@ function requestEvents() { //Makes API Call and parses JSON and passes coordinat
                         markers[i][markers[i].length-1].setMap(null);   
                     }
                     else if(dateAndTimeFilter){
-                        setMapOnAll(null, i);
-                        for(j = 0; j < markers.length; j++)
+                        // setMapOnAll(null, i);
+                        for(j = 0; j < markers[i].length; j++)
                         {
                             if(markers[i][j] != null)
                             {
@@ -274,7 +272,7 @@ function showMarkers(category) {
     }
     else 
     {
-        for(j = 0; j < markers.length; j++)
+        for(j = 0; j < markers[category].length; j++)
         {
             if(markers[category][j] != null)
             {
@@ -444,8 +442,8 @@ $(function() {
   });
   $('input[name="datetimes"]').on('apply.daterangepicker', function(ev, picker) {
     for(i = 0; i < filter.length; i++) {
-        setMapOnAll(null, i);
-        for(j = 0; j < markers.length; j++)
+        // setMapOnAll(null, i);
+        for(j = 0; j < markers[i].length; j++)
         {
             if(markers[i][j] != null)
             {
